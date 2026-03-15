@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Birthday Surprise</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
@@ -13,7 +12,7 @@
 body{
 margin:0;
 font-family:Poppins;
-background:black;
+background:linear-gradient(#000000,#120018);
 color:white;
 overflow:hidden;
 }
@@ -30,6 +29,7 @@ align-items:center;
 flex-direction:column;
 text-align:center;
 transition:1s;
+padding:20px;
 }
 
 .hidden{
@@ -37,39 +37,10 @@ opacity:0;
 pointer-events:none;
 }
 
-/* stars */
-
-.star{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-animation:twinkle 2s infinite;
-}
-
-@keyframes twinkle{
-0%{opacity:.2}
-50%{opacity:1}
-100%{opacity:.2}
-}
-
-/* hearts */
-
-.heart{
-position:absolute;
-color:#ff4fa3;
-animation:rise 8s linear infinite;
-}
-
-@keyframes rise{
-0%{transform:translateY(100vh)}
-100%{transform:translateY(-100vh)}
-}
-
-/* button */
+/* buttons */
 
 button{
-padding:14px 30px;
+padding:14px 28px;
 border:none;
 border-radius:30px;
 background:#ff4fa3;
@@ -79,18 +50,73 @@ cursor:pointer;
 margin-top:20px;
 }
 
+/* hearts */
+
+.heart{
+position:absolute;
+color:#ff4fa3;
+font-size:20px;
+animation:rise 8s linear infinite;
+}
+
+@keyframes rise{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-100vh)}
+}
+
 /* balloons */
 
 .balloon{
 position:absolute;
 width:60px;
-cursor:pointer;
 animation:float 6s linear infinite;
+cursor:pointer;
 }
 
 @keyframes float{
 0%{transform:translateY(100vh)}
 100%{transform:translateY(-120vh)}
+}
+
+/* first page balloons */
+
+.partyArea{
+display:flex;
+gap:40px;
+margin-top:40px;
+}
+
+.decorBalloon{
+font-size:70px;
+position:relative;
+animation:floatUp 4s ease-in-out infinite;
+}
+
+.decorBalloon span{
+position:absolute;
+top:24px;
+left:50%;
+transform:translateX(-50%);
+font-size:14px;
+color:white;
+font-weight:bold;
+}
+
+.partyPopper{
+font-size:70px;
+animation:popper 2s infinite;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0)}
+50%{transform:translateY(-25px)}
+100%{transform:translateY(0)}
+}
+
+@keyframes popper{
+0%{transform:rotate(0)}
+50%{transform:rotate(15deg)}
+100%{transform:rotate(0)}
 }
 
 /* cake */
@@ -117,12 +143,12 @@ width:5px;
 height:5px;
 background:white;
 border-radius:50%;
-animation:explode 1s forwards;
+animation:explode 1.2s forwards;
 }
 
 @keyframes explode{
 from{transform:scale(1)}
-to{transform:scale(20);opacity:0}
+to{transform:scale(25);opacity:0}
 }
 
 video{
@@ -135,17 +161,38 @@ border-radius:10px;
 
 <body>
 
+<!-- background music -->
+
+<audio id="bgMusic" autoplay loop>
+<source src="background.mp3" type="audio/mp3">
+</audio>
+
 <!-- slide 1 -->
 
 <div class="slide" id="s1">
+
 <h1 id="typing"></h1>
+
+<div class="partyArea">
+
+<div class="decorBalloon">🎈<span>Happy</span></div>
+<div class="decorBalloon">🎈<span>Birthday</span></div>
+<div class="decorBalloon">🎈<span>Sourabh</span></div>
+
+<div class="partyPopper">🎉</div>
+
+</div>
+
 <button onclick="next(2)">Start the Surprise</button>
+
 </div>
 
 <!-- slide 2 -->
 
 <div class="slide hidden" id="s2">
+
 <p>
+
 I wanted to do many things for you on your birthday…<br><br>
 
 But the situation right now is a little different.<br><br>
@@ -153,36 +200,49 @@ But the situation right now is a little different.<br><br>
 Still I didn't want this day to pass without doing something special for you.<br><br>
 
 So I made this little surprise for you.
+
 </p>
 
 <button onclick="next(3)">Next</button>
+
 </div>
 
-<!-- slide 3 balloon -->
+<!-- slide 3 balloon game -->
 
 <div class="slide hidden" id="s3">
+
 <h2>Pop the balloons 🎈</h2>
+
 <p id="timer">7</p>
+
 </div>
 
 <!-- slide 4 cake -->
 
 <div class="slide hidden" id="s4">
+
 <div class="cake">🎂</div>
+
 <button onclick="next(5)">Light the Candle</button>
+
 </div>
 
 <!-- slide 5 candle -->
 
 <div class="slide hidden" id="s5">
+
 <div class="cake">🎂</div>
+
 <div id="flame" class="flame">🔥</div>
+
 <button onclick="blow()">Blow the Candle</button>
+
 </div>
 
 <!-- slide 6 feeling -->
 
 <div class="slide hidden" id="s6">
+
 <p>
 
 You just blew the candle…<br><br>
@@ -196,6 +256,7 @@ Happy Birthday.
 </p>
 
 <button onclick="next(7)">Next</button>
+
 </div>
 
 <!-- slide 7 video -->
@@ -204,9 +265,9 @@ Happy Birthday.
 
 <p>I made something small for you</p>
 
-<video id="video" controls autoplay>
+<video controls autoplay>
 
-<source src="VIDEO_LINK_OR_BASE64">
+<source src="video.mp4" type="video/mp4">
 
 </video>
 
@@ -217,6 +278,7 @@ Happy Birthday.
 <!-- slide 8 -->
 
 <div class="slide hidden" id="s8">
+
 <p>
 
 You once told me that you would be really happy if I ever sang a song for you.
@@ -224,9 +286,10 @@ You once told me that you would be really happy if I ever sang a song for you.
 </p>
 
 <button onclick="next(9)">Next</button>
+
 </div>
 
-<!-- slide 9 -->
+<!-- slide 9 song -->
 
 <div class="slide hidden" id="s9">
 
@@ -242,53 +305,17 @@ But none of them could ever say everything my heart wants to say.
 
 <button onclick="playSong()">Play My Song 🎵</button>
 
+<br><br>
+
+<button id="songNext" onclick="next(10)" style="display:none">
+Next
+</button>
+
 </div>
 
 <!-- slide 10 -->
 
 <div class="slide hidden" id="s10">
-
-<p>
-
-Maybe this surprise is small…<br><br>
-
-but it came from my heart.
-
-</p>
-
-<button onclick="next(11)">Next</button>
-
-</div>
-
-<!-- slide 11 -->
-
-<div class="slide hidden" id="s11">
-
-<h2>✨</h2>
-
-<button onclick="next(12)">Next</button>
-
-</div>
-
-<!-- slide 12 -->
-
-<div class="slide hidden" id="s12">
-
-<button onclick="next(13)">Next</button>
-
-</div>
-
-<!-- slide 13 -->
-
-<div class="slide hidden" id="s13">
-
-<button onclick="next(14)">Next</button>
-
-</div>
-
-<!-- slide 14 final -->
-
-<div class="slide hidden" id="s14">
 
 <h1>Happy Birthday Sourabh ❤️</h1>
 
@@ -306,15 +333,11 @@ It makes me really happy.
 
 </div>
 
-<audio id="song">
-
-<source src="AUDIO_LINK_OR_BASE64">
-
-</audio>
+<audio id="song" src="song.m4a"></audio>
 
 <script>
 
-/* slide change */
+/* slide */
 
 function next(n){
 
@@ -346,25 +369,9 @@ setTimeout(typing,100)
 
 typing()
 
-/* stars */
-
-for(let i=0;i<80;i++){
-
-let s=document.createElement("div")
-
-s.className="star"
-
-s.style.left=Math.random()*100+"%"
-
-s.style.top=Math.random()*100+"%"
-
-document.body.appendChild(s)
-
-}
-
 /* hearts */
 
-for(let i=0;i<20;i++){
+for(let i=0;i<25;i++){
 
 let h=document.createElement("div")
 
@@ -434,7 +441,7 @@ setTimeout(()=>next(6),2000)
 
 function fireworks(){
 
-for(let i=0;i<20;i++){
+for(let i=0;i<40;i++){
 
 let f=document.createElement("div")
 
@@ -444,9 +451,11 @@ f.style.left=Math.random()*100+"%"
 
 f.style.top=Math.random()*100+"%"
 
+f.style.background="rgb("+Math.random()*255+","+Math.random()*255+","+Math.random()*255+")"
+
 document.body.appendChild(f)
 
-setTimeout(()=>f.remove(),1000)
+setTimeout(()=>f.remove(),1200)
 
 }
 
@@ -456,7 +465,11 @@ setTimeout(()=>f.remove(),1000)
 
 function playSong(){
 
-document.getElementById("song").play()
+let song=document.getElementById("song")
+
+song.play()
+
+document.getElementById("songNext").style.display="inline-block"
 
 }
 
